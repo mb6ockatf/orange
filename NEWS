@@ -1,0 +1,8 @@
+GNU-style NEWS for orange.  Newest release first.
+
+* Noteworthy changes in release 0.0.1 (unreleased)
+
+** Build system
+
+  First autotools skeleton: oranged, orange-agent and orange-cli build,
+  answer --help and --version, and do nothing else yet.

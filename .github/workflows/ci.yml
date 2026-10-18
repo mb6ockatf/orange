@@ -1,0 +1,52 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-FileCopyrightText: 2026 The Orange authors
+
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  distcheck:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Minimum supported compiler: Debian 13 ships GCC 14.
+          - name: gcc-14 (minimum)
+            image: debian:trixie
+            compiler: g++
+            packages: g++
+          - name: clang (minimum libstdc++)
+            image: debian:trixie
+            compiler: clang++
+            packages: clang g++
+          # Newest compiler Debian has.
+          - name: gcc (newest)
+            image: debian:testing
+            compiler: g++
+            packages: g++
+    container: ${{ matrix.image }}
+    steps:
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            ${{ matrix.packages }} make autoconf automake libtool pkgconf \
+            texinfo ca-certificates git \
+            libexpat1-dev libssl-dev libsqlite3-dev libasio-dev catch2
+      - uses: actions/checkout@v4
+      - name: Generate the build system
+        run: ./autogen.sh
+      - name: Configure
+        run: ./configure CXX=${{ matrix.compiler }} --enable-werror --enable-sanitizers
+      - name: Build and test
+        run: make -j"$(nproc)" check
+      - name: Distcheck
+        run: make -j"$(nproc)" distcheck DISTCHECK_CONFIGURE_FLAGS="CXX=${{ matrix.compiler }} --enable-werror"
+      - name: Show test logs
+        if: failure()
+        run: find . -name '*.log' -path '*tests*' -exec sh -c 'echo "== $1"; cat "$1"' sh {} \;

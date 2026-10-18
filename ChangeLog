@@ -1,0 +1,6 @@
+2026-10-18  mb6ockatf
+
+	Initial autotools skeleton (gnits strictness): configure.ac,
+	non-recursive Makefile.am with per-component local.mk files,
+	liborange, oranged, orange-agent and orange-cli stubs, Catch2
+	unit tests through the TAP driver, Texinfo manual and man pages.

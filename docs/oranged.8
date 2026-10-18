@@ -1,0 +1,38 @@
+.\" SPDX-License-Identifier: GFDL-1.3-no-invariants-or-later
+.\" SPDX-FileCopyrightText: 2026 The Orange authors
+.\"
+.\" Permission is granted to copy, distribute and/or modify this document
+.\" under the terms of the GNU Free Documentation License, Version 1.3 or
+.\" any later version published by the Free Software Foundation; with no
+.\" Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+.\" A copy of the license is in the file COPYING.DOC.
+.TH ORANGED 8 2026-10-18 orange "System Manager's Manual"
+.SH NAME
+oranged \- the Orange XMPP server
+.SH SYNOPSIS
+.B oranged
+.RI [ option ]...
+.SH DESCRIPTION
+.B oranged
+is the XMPP server of the Orange project.
+It is not implemented yet: started without options, it reports that and
+exits.
+.SH OPTIONS
+.TP
+.B \-\-help
+Display a usage message and exit.
+.TP
+.B \-\-version
+Output version information and exit.
+.SH EXIT STATUS
+0 for
+.B \-\-help
+and
+.BR \-\-version ,
+1 otherwise, 2 for a usage error.
+.SH SEE ALSO
+.BR orange-agent (1),
+.BR orange-cli (1)
+.PP
+The full documentation is the Texinfo manual:
+.B info orange
