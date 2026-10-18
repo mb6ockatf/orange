@@ -23,7 +23,7 @@ jobs:
           - name: clang (minimum libstdc++)
             image: debian:trixie
             compiler: clang++
-            packages: clang g++
+            packages: clang libclang-rt-dev g++
           # Newest compiler Debian has.
           - name: gcc (newest)
             image: debian:testing
@@ -36,9 +36,9 @@ jobs:
           apt-get update
           apt-get install -y --no-install-recommends \
             ${{ matrix.packages }} make autoconf automake libtool pkgconf \
-            texinfo ca-certificates git \
+            texinfo xz-utils ca-certificates git \
             libexpat1-dev libssl-dev libsqlite3-dev libasio-dev catch2
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Generate the build system
         run: ./autogen.sh
       - name: Configure
@@ -47,6 +47,8 @@ jobs:
         run: make -j"$(nproc)" check
       - name: Distcheck
         run: make -j"$(nproc)" distcheck DISTCHECK_CONFIGURE_FLAGS="CXX=${{ matrix.compiler }} --enable-werror"
-      - name: Show test logs
+      - name: Show logs
         if: failure()
-        run: find . -name '*.log' -path '*tests*' -exec sh -c 'echo "== $1"; cat "$1"' sh {} \;
+        run: |
+          find . -name config.log -exec sh -c 'echo "== $1"; tail -n 100 "$1"' sh {} \;
+          find . -name '*.log' -path '*tests*' -exec sh -c 'echo "== $1"; cat "$1"' sh {} \;
