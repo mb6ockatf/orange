@@ -6,7 +6,7 @@
 - **Status:** Proposed
 - **Date:** 2026-10-26
 - **Deciders:** mb6ockatf
-- **Issue:** #NN
+- **Issue:** #120
 - **Blocks:** #7
 
 ## Context
