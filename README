@@ -20,11 +20,12 @@ Requirements
 ------------
 
 You need a C++23 compiler (GCC 14 or later, or Clang 18 or later with
-libstdc++ 14), expat, OpenSSL 3, SQLite 3, standalone asio and, for the
-unit tests, Catch2 3.  On Debian:
+libstdc++ 14), expat, OpenSSL 3, SQLite 3, standalone asio, libsecret
+(for the client) and, for the unit tests, Catch2 3.  On Debian:
 
     nala install g++ autoconf automake libtool pkgconf texinfo \
-      libexpat1-dev libssl-dev libsqlite3-dev libasio-dev catch2
+      libexpat1-dev libssl-dev libsqlite3-dev libasio-dev catch2 \
+      libsecret-1-dev
 
 Building and installing
 -----------------------
